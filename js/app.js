@@ -93,8 +93,11 @@
   function WdinstagramEditControllerFunction(WdinstagramFactory, $stateParams, $state) {
     this.entry = WdinstagramFactory.get({id: $stateParams.id})
     this.update = function(){
-      this.entry.$update({id: $stateParams.id})
-      $state.go('wdinstagramShow', { id: $stateParams.id})
+      this.entry.$update({id: $stateParams.id}, function(data){
+        let id = data.id
+        $state.go('wdinstagramShow', { id: id})
+      })
+
     }
 
   }
@@ -102,8 +105,9 @@
   function WdinstagramShowControllerFunction(WdinstagramFactory, $stateParams, $state){
     this.entry = WdinstagramFactory.get({id: $stateParams.id})
     this.delete = function() {
-      this.entry.$delete({id: $stateParams.id})
-      $state.go('wdinstagramIndex')
+      this.entry.$delete({id: $stateParams.id}, function(){
+          $state.go('wdinstagramIndex').success
+      })
     }
   }
 
