@@ -1,1 +1,3 @@
-<h1>hi</h1>
+<div ng-repeat="entry in vm.entries">
+    <a data-ui-sref="wdinstagramShow({id: entry.id})"><img ng-src="{{entry.photo_url}}"/></a>
+</div>

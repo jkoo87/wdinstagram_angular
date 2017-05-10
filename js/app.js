@@ -1,20 +1,20 @@
 "use strict";
 
-let dummyData = [
-  { title: "Hello" ,
-    author: "jkoo" ,
-    content: "Build a simple angular app that can preform CRUD on dummy data. The data should have a: photo_url, author, & body. Add a router, and templates for at least a show & index view." ,
-    photo_url: "http://wallpaper-gallery.net/images/picture/picture-14.jpg"
+let entries = [
+  { author: "jkoo" ,
+    body: "Build a simple angular app that can preform CRUD on dummy data. The data should have a: photo_url, author, & body. Add a router, and templates for at least a show & index view." ,
+    photo_url: "https://pixlr.com/assets/landing/gallery/5-68c0f48120fefc5eb0cff67573d649da.jpg",
+    id: 0
   },
-  { title: "WDInstagram Angular" ,
-    author: "jkoo" ,
-    content: "Apr 27, 2017 - The HTML picture element is a container used to specify mult" ,
-    photo_url: "http://www.apicius.es/wp-content/uploads/2012/07/IMG-20120714-009211.jpg"
+  { author: "jkoo" ,
+    body: "Apr 27, 2017 - The HTML picture element is a container used to specify mult" ,
+    photo_url: "https://s-media-cache-ak0.pinimg.com/736x/11/c8/49/11c849dd69eb68a21a170ffc524e5bbd.jpg",
+    id: 1
   },
-  { title: "Part 1 CRUD with dummy data" ,
-    author: "jkoo" ,
-    content: "O “p” do termo projeto remete aos balões de diálogo. Lembrando aos membros sua missão evangelizadora de anunciar, comunicar a Paz." ,
-    photo_url: "http://www.comshalom.org/portal/wp-content/uploads/2014/05/07/redacao/nova-logo-PJJ.jpg"
+  { author: "jkoo" ,
+    body: "O “p” do termo projeto remete aos balões de diálogo. Lembrando aos membros sua missão evangelizadora de anunciar, comunicar a Paz." ,
+    photo_url: "https://images.pexels.com/photos/207962/pexels-photo-207962.jpeg?h=350&auto=compress&cs=tinysrgb",
+    id: 2
   }
 ]
 
@@ -31,6 +31,7 @@ let dummyData = [
     wdinstagramIndexControllerFunction
   ])
   .controller("wdinstagramShowController", [
+    "$stateParams",
     wdinstagramShowControllerFunction
   ])
 
@@ -51,11 +52,11 @@ let dummyData = [
   }
 
   function wdinstagramIndexControllerFunction(){
-    console.log("index")
+    this.entries = entries
   }
 
-  function wdinstagramShowControllerFunction(){
-        console.log("show")
+  function wdinstagramShowControllerFunction($stateParams){
+    this.entry = entries[$stateParams.id]
   }
 
 
