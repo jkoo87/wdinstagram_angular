@@ -1,3 +1,5 @@
+<a data-ui-sref="wdinstramsNew"><h2>New</h2></a>
+
 <div ng-repeat="entry in vm.entries">
-    <a data-ui-sref="wdinstagramShow({id: entry.id})"><img ng-src="{{entry.photo_url}}"/></a>
+    <a data-ui-sref="wdinstagramShow({id: $index})"><img ng-src="{{entry.photo_url}}"/></a>
 </div>
