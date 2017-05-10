@@ -1,23 +1,27 @@
 "use strict";
 
-let entries = [
-  { author: "jkoo" ,
-    body: "Build a simple angular app that can preform CRUD on dummy data. The data should have a: photo_url, author, & body. Add a router, and templates for at least a show & index view." ,
-    photo_url: "https://pixlr.com/assets/landing/gallery/5-68c0f48120fefc5eb0cff67573d649da.jpg",
-  },
-  { author: "jkoo" ,
-    body: "Apr 27, 2017 - The HTML picture element is a container used to specify mult" ,
-    photo_url: "https://s-media-cache-ak0.pinimg.com/736x/11/c8/49/11c849dd69eb68a21a170ffc524e5bbd.jpg",
-  },
-  { author: "jkoo" ,
-    body: "O “p” do termo projeto remete aos balões de diálogo. Lembrando aos membros sua missão evangelizadora de anunciar, comunicar a Paz." ,
-    photo_url: "https://images.pexels.com/photos/207962/pexels-photo-207962.jpeg?h=350&auto=compress&cs=tinysrgb",
-  }
-]
 
 
 
-// (function(){
+
+(function(){
+
+
+  let entries = [
+    { author: "jkoo" ,
+      body: "Build a simple angular app that can preform CRUD on dummy data. The data should have a: photo_url, author, & body. Add a router, and templates for at least a show & index view." ,
+      photo_url: "https://pixlr.com/assets/landing/gallery/5-68c0f48120fefc5eb0cff67573d649da.jpg",
+    },
+    { author: "jkoo" ,
+      body: "Apr 27, 2017 - The HTML picture element is a container used to specify mult" ,
+      photo_url: "https://s-media-cache-ak0.pinimg.com/736x/11/c8/49/11c849dd69eb68a21a170ffc524e5bbd.jpg",
+    },
+    { author: "jkoo" ,
+      body: "O “p” do termo projeto remete aos balões de diálogo. Lembrando aos membros sua missão evangelizadora de anunciar, comunicar a Paz." ,
+      photo_url: "https://images.pexels.com/photos/207962/pexels-photo-207962.jpeg?h=350&auto=compress&cs=tinysrgb",
+    }
+  ]
+
   angular
   .module("wdinstagram", [
     "ui.router",
@@ -40,7 +44,12 @@ let entries = [
   ])
   .controller("WdinstagramNewController", [
     "$state",
-    WdinstagramNewControllerFUnction
+    WdinstagramNewControllerFunction
+  ])
+  .controller("WdinstagramEditController", [
+    "$stateParams",
+    "$state",
+    WdinstagramEditControllerFunction
   ])
 
   function RouterFunction($stateProvider){
@@ -63,6 +72,12 @@ let entries = [
       controller: "WdinstagramNewController",
       controllerAs: "vm"
     })
+    .state("wdinstagramEdit", {
+      url: "/wdinstagrams/:id/edit",
+      templateUrl: "js/ng-views/edit.html",
+      controller: "WdinstagramEditController",
+      controllerAs: "vm"
+    })
   }
 
   function WdinstagramFactoryFunction($resource){
@@ -73,7 +88,7 @@ let entries = [
     this.entries = entries
   }
 
-  function WdinstagramNewControllerFUnction($state, $index){
+  function WdinstagramNewControllerFunction($state){
     this.entries = entries
     this.newEntry = {}
     this.create = function() {
@@ -83,9 +98,18 @@ let entries = [
     }
   }
 
+  function WdinstagramEditControllerFunction($stateParams, $state) {
+    this.entry = entries[$stateParams.id]
+    this.update = function() {
+      this.entry = entries[$stateParams.id]
+      $state.go('wdinstagramShow', { id: $stateParams.id})
+    }
+  }
+
   function WdinstagramShowControllerFunction($stateParams){
     this.entry = entries[$stateParams.id]
+    this.id = $stateParams.id
   }
 
 
-// })();
+})();
