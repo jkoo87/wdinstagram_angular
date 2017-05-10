@@ -13,8 +13,8 @@
       photo_url: "https://pixlr.com/assets/landing/gallery/5-68c0f48120fefc5eb0cff67573d649da.jpg",
     },
     { author: "jkoo" ,
-      body: "Apr 27, 2017 - The HTML picture element is a container used to specify mult" ,
-      photo_url: "https://s-media-cache-ak0.pinimg.com/736x/11/c8/49/11c849dd69eb68a21a170ffc524e5bbd.jpg",
+      body: "O “p” do termo projeto remete aos balões de diálogo. Lembrando aos membros sua missão evangelizadora de anunciar, comunicar a Paz." ,
+      photo_url: "http://www.freedigitalphotos.net/images/img/homepage/golf-1-top-82328.jpg",
     },
     { author: "jkoo" ,
       body: "O “p” do termo projeto remete aos balões de diálogo. Lembrando aos membros sua missão evangelizadora de anunciar, comunicar a Paz." ,
@@ -40,6 +40,7 @@
   ])
   .controller("WdinstagramShowController", [
     "$stateParams",
+    "$state",
     WdinstagramShowControllerFunction
   ])
   .controller("WdinstagramNewController", [
@@ -81,7 +82,7 @@
   }
 
   function WdinstagramFactoryFunction($resource){
-
+    return $resource('http://localhost:3000/entries/:id')
   }
 
   function WdinstagramIndexControllerFunction(){
@@ -106,9 +107,13 @@
     }
   }
 
-  function WdinstagramShowControllerFunction($stateParams){
+  function WdinstagramShowControllerFunction($stateParams, $state, $index){
     this.entry = entries[$stateParams.id]
     this.id = $stateParams.id
+    this.delete = function() {
+      entries.splice($stateParams.id, 1)
+      $state.go('wdinstagramIndex')
+    }
   }
 
 
