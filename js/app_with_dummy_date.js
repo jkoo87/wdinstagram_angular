@@ -7,6 +7,21 @@
 (function(){
 
 
+  let entries = [
+    { author: "jkoo" ,
+      body: "Build a simple angular app that can preform CRUD on dummy data. The data should have a: photo_url, author, & body. Add a router, and templates for at least a show & index view." ,
+      photo_url: "https://pixlr.com/assets/landing/gallery/5-68c0f48120fefc5eb0cff67573d649da.jpg",
+    },
+    { author: "jkoo" ,
+      body: "O “p” do termo projeto remete aos balões de diálogo. Lembrando aos membros sua missão evangelizadora de anunciar, comunicar a Paz." ,
+      photo_url: "http://www.freedigitalphotos.net/images/img/homepage/golf-1-top-82328.jpg",
+    },
+    { author: "jkoo" ,
+      body: "O “p” do termo projeto remete aos balões de diálogo. Lembrando aos membros sua missão evangelizadora de anunciar, comunicar a Paz." ,
+      photo_url: "https://images.pexels.com/photos/207962/pexels-photo-207962.jpeg?h=350&auto=compress&cs=tinysrgb",
+    }
+  ]
+
   angular
   .module("wdinstagram", [
     "ui.router",
@@ -21,7 +36,6 @@
     WdinstagramFactoryFunction
   ])
   .controller("WdinstagramIndexController", [
-    "WdinstagramFactory",
     WdinstagramIndexControllerFunction
   ])
   .controller("WdinstagramShowController", [
@@ -71,8 +85,8 @@
     return $resource('http://localhost:3000/entries/:id')
   }
 
-  function WdinstagramIndexControllerFunction( WdinstagramFactory){
-    this.entries = WdinstagramFactory.query()
+  function WdinstagramIndexControllerFunction(){
+    this.entries = entries
   }
 
   function WdinstagramNewControllerFunction($state){
