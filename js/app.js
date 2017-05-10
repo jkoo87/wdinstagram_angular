@@ -25,17 +25,19 @@
     WdinstagramIndexControllerFunction
   ])
   .controller("WdinstagramShowController", [
+    "WdinstagramFactory",
     "$stateParams",
     "$state",
     WdinstagramShowControllerFunction
   ])
   .controller("WdinstagramNewController", [
+    "WdinstagramFactory",
     "$state",
     WdinstagramNewControllerFunction
   ])
   .controller("WdinstagramEditController", [
+    "WdinstagramFactory",
     "$stateParams",
-    "$state",
     WdinstagramEditControllerFunction
   ])
 
@@ -75,29 +77,23 @@
     this.entries = WdinstagramFactory.query()
   }
 
-  function WdinstagramNewControllerFunction($state){
-    this.entries = entries
-    this.newEntry = {}
-    this.create = function() {
-      this.entries.push(this.newEntry)
-      this.newEntry = {}
-      $state.go('wdinstagramShow', { id: this.entries.length-1})
+  function WdinstagramNewControllerFunction(WdinstagramFactory, $state){
+    this.entry = new WdinstagramFactory()
+    this.create = function(){
+      this.entry.$save()
+      $state.go('wdinstagramShow', { id: this.entry.id})
     }
   }
 
-  function WdinstagramEditControllerFunction($stateParams, $state) {
-    this.entry = entries[$stateParams.id]
-    this.update = function() {
-      this.entry = entries[$stateParams.id]
-      $state.go('wdinstagramShow', { id: $stateParams.id})
-    }
+  function WdinstagramEditControllerFunction(WdinstagramFactory, $stateParams) {
+    this.entry = WdinstagramFactory.get({id: $stateParams.id})
+
   }
 
-  function WdinstagramShowControllerFunction($stateParams, $state, $index){
-    this.entry = entries[$stateParams.id]
-    this.id = $stateParams.id
+  function WdinstagramShowControllerFunction(WdinstagramFactory, $stateParams, $state, $index){
+    this.entry = WdinstagramFactory.get({id: $stateParams.id})
     this.delete = function() {
-      entries.splice($stateParams.id, 1)
+      this.entry.$delete({id: $stateParams.id})
       $state.go('wdinstagramIndex')
     }
   }
