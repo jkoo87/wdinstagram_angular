@@ -38,6 +38,7 @@
   .controller("WdinstagramEditController", [
     "WdinstagramFactory",
     "$stateParams",
+    "$state",
     WdinstagramEditControllerFunction
   ])
 
@@ -70,7 +71,9 @@
   }
 
   function WdinstagramFactoryFunction($resource){
-    return $resource('http://localhost:3000/entries/:id')
+    return $resource('http://localhost:3000/entries/:id', {}, {
+      update: { method: "PUT"}
+    })
   }
 
   function WdinstagramIndexControllerFunction( WdinstagramFactory){
@@ -80,17 +83,23 @@
   function WdinstagramNewControllerFunction(WdinstagramFactory, $state){
     this.entry = new WdinstagramFactory()
     this.create = function(){
-      this.entry.$save()
-      $state.go('wdinstagramShow', { id: this.entry.id})
+      this.entry.$save(this.entry, function(data){
+        let id = data.id
+        $state.go('wdinstagramShow', { id: id})
+      })
     }
   }
 
-  function WdinstagramEditControllerFunction(WdinstagramFactory, $stateParams) {
+  function WdinstagramEditControllerFunction(WdinstagramFactory, $stateParams, $state) {
     this.entry = WdinstagramFactory.get({id: $stateParams.id})
+    this.update = function(){
+      this.entry.$update({id: $stateParams.id})
+      $state.go('wdinstagramShow', { id: $stateParams.id})
+    }
 
   }
 
-  function WdinstagramShowControllerFunction(WdinstagramFactory, $stateParams, $state, $index){
+  function WdinstagramShowControllerFunction(WdinstagramFactory, $stateParams, $state){
     this.entry = WdinstagramFactory.get({id: $stateParams.id})
     this.delete = function() {
       this.entry.$delete({id: $stateParams.id})
